@@ -1,23 +1,24 @@
 void inicializacao(void){
-  for(int i=0; i<=255; i++){
+  /*for(i=0; i<=255; i++){
     analogWrite(pinoLedDisplay, i);
-  }
+  }*/
   
-  CONTRASTE = 4;
-  BRILHO = 5;
-  controleContraste(CONTRASTE);
-  
-  lcd.limpaTela();
-  lcd.posicaoCursor(3,0);
+  lcd.clear();
+  lcd.setCursor(3,0);
   lcd.print("Guarabots");
-  lcd.posicaoCursor(0,1);
+  lcd.setCursor(0,1);
   lcd.print("estacao de bolso");
    
-  buz.beepSimples(pinoBuzzer, temp_beep);
+  digitalWrite(pinoBuzzer, HIGH);
+  delay(150);
+  digitalWrite(pinoBuzzer, LOW);
   
-  while(button.estado(pinobuttonEnter) != 0);
+  while(estado_Botao(pinobuttonEnter) != 0);
 
-  buz.beepSimples(pinoBuzzer, temp_beep);
-  lcd.limpaTela();
+  digitalWrite(pinoBuzzer, HIGH);
+  delay(150);
+  digitalWrite(pinoBuzzer, LOW);
+  
+  lcd.clear();
 }
 

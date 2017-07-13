@@ -1,14 +1,14 @@
 void timeDisplay(void) {
   static unsigned long auxIntervalo = 0;
 
-  if (!button.estado(pinobuttonUp) || !button.estado(pinobuttonDown) || !button.estado(pinobuttonEnter)) {
+  if (!estado_Botao(pinobuttonUp) || !estado_Botao(pinobuttonDown) || !estado_Botao(pinobuttonEnter)) {
     auxIntervalo = millis();
     digitalWrite(pinoLedDisplay, HIGH);
-    lcd.estadoLigado();
+    lcd.display();
   }else{
     if ((millis() - auxIntervalo) >= intervalo_lcd) {
       digitalWrite(pinoLedDisplay, LOW);
-      lcd.estadoDesligado();
+      lcd.noDisplay();
     }
   }
 
@@ -16,59 +16,38 @@ void timeDisplay(void) {
     auxIntervalo = millis();
   }
 }
+//--------------------------------------------------------------------------------------------------------------------------------
 
-int contraste(void) {
+int Sistema_UP_or_Down(int varContol, char control){
   static bool t_butA = false, t_butD = false;
   
-  if(!button.estado(pinobuttonUp))   t_butA = true;
-  if(!button.estado(pinobuttonDown)) t_butD = true;
+  if(!estado_Botao(pinobuttonUp))   t_butA = true;
+  if(!estado_Botao(pinobuttonDown)) t_butD = true;
 
-  if(button.estado(pinobuttonUp) && t_butA == true && t_butD == false){
-     CONTRASTE--; 
-     lcd.limpaTela();
-     controleContraste(CONTRASTE);
+  if(estado_Botao(pinobuttonUp) && t_butA == true && t_butD == false){
+     varContol--; 
+     lcd.clear();
+     control == 'C' ? controleContraste(varContol) : controleBrilho(varContol);
      t_butA = false;
   }
-  if(button.estado(pinobuttonDown) && t_butA == false && t_butD == true){
-     CONTRASTE++;
-     lcd.limpaTela();
-     controleContraste(CONTRASTE);
+  if(estado_Botao(pinobuttonDown) && t_butA == false && t_butD == true){
+     varContol++;
+     lcd.clear();
+     control == 'C' ? controleContraste(varContol) : controleBrilho(varContol);
      t_butD = false;
   }
 
-  if(CONTRASTE <= 0)
-    CONTRASTE = 0;
-  else if(CONTRASTE >= 10)
-    CONTRASTE = 10;
+  if(varContol <= 0)
+    varContol = 0;
+  else if(varContol >= 10)
+    varContol = 10;
+
+    return varContol;
 }
 
-int brilho(void) {
-  static bool t_butA = false, t_butD = false;
-  
-  if(!button.estado(pinobuttonUp))   t_butA = true;
-  if(!button.estado(pinobuttonDown)) t_butD = true;
-
-  if(button.estado(pinobuttonUp) && t_butA == true && t_butD == false){
-     BRILHO--; 
-     lcd.limpaTela();
-     controleBrilho(BRILHO);
-     t_butA = false;
-  }
-  if(button.estado(pinobuttonDown) && t_butA == false && t_butD == true){
-     BRILHO++;
-     lcd.limpaTela();
-     controleBrilho(BRILHO);
-     t_butD = false;
-  }
-  
-  if(BRILHO <= 0)
-    BRILHO = 0;
-  else if(BRILHO >= 10)
-    BRILHO = 10;
-}
-//-------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------
 void controleContraste(int contraste){
-  analogWrite(pinoLedDisplay, map(contraste, 0, 10, 0, 255));
+  analogWrite(pinoContrasteDisplay, map(contraste, 0, 10, 0, 255));
 }
 
 void controleBrilho(int brilho){
