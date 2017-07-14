@@ -3,11 +3,11 @@ void timeDisplay(void) {
 
   if (!estado_Botao(pinobuttonUp) || !estado_Botao(pinobuttonDown) || !estado_Botao(pinobuttonEnter)) {
     auxIntervalo = millis();
-    digitalWrite(pinoLedDisplay, HIGH);
+    estado_Led(pinoLedDisplay, true);
     lcd.display();
   }else{
     if ((millis() - auxIntervalo) >= intervalo_lcd) {
-      digitalWrite(pinoLedDisplay, LOW);
+      estado_Led(pinoLedDisplay, false);
       lcd.noDisplay();
     }
   }

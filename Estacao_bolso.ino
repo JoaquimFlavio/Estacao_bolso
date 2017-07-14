@@ -1,4 +1,3 @@
-#define funcao Hardware
 #include <GuaraTeca_Hardware.h>
 #include <LiquidCrystal.h>
 #include <DHT.h>
@@ -73,21 +72,20 @@ void setup() {
     Serial.begin(9600);
   #endif
 
+  //Inicializamos o hardware__________________________________________
   lcd.createChar(0, grau);
-  
-  pinMode(pinoBuzzer, OUTPUT);
-  inicia_SensorAgua(pinoSensorUmidadeSolo);
   lcd.begin(16, 2);
+  inicia_SensorAgua(pinoSensorUmidadeSolo);
+  inicia_Buzzer(pinoBuzzer);
   inicia_Botao(pinobuttonUp);
   inicia_Botao(pinobuttonDown);
   inicia_Botao(pinobuttonEnter);
-  pinMode(pinoLedDisplay, OUTPUT);
-  
+  inicia_Led(pinoLedDisplay);
   pinMode(pinoCS, OUTPUT);//Configura saída para Chip Select
-
-  t_butUp = t_butDown = t_butEnter = t_butBack = false;
-
   iniciaSD();
+
+  //Configuraçoes iniciais_________________________________________
+  t_butUp = t_butDown = t_butEnter = t_butBack = false;
 
   CONTRASTE = get_in_file(0);
   BRILHO = get_in_file(1);
@@ -117,7 +115,7 @@ void setup() {
     #endif
   }
   
-  inicializacao();
+  inicializacao();//Função para fazer o processo visual de inicialização.
 }
 
 void loop() {

@@ -50,9 +50,7 @@ void dispMenu(void) {
       }
       if(!estado_Botao(pinobuttonEnter)){
           gravaDados();
-          digitalWrite(pinoBuzzer, HIGH);
-          delay(150);
-          digitalWrite(pinoBuzzer, LOW);
+          beepSimples(pinoBuzzer, temp_beep);
           while(!estado_Botao(pinobuttonEnter)){
             auxGravar = false;
           }
