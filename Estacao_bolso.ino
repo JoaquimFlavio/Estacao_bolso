@@ -36,11 +36,10 @@
 #define fileDados     "DATA.txt"
 
 //Funcoes/Rotinas do codigo________________________________________________________
-int Sistema_UP_or_Down(int varContol, char control);
-void set_in_file(uint8_t opc, int value);
-void controleContraste(int contraste);
-void controleBrilho(int brilho);
-int get_in_file(uint8_t opc);
+int Sistema_UP_or_Down();
+void set_in_file();
+void controleContraste();
+int get_in_file();
 void inicializacao(void);
 void timeDisplay(void);
 void changeMenu(void);
@@ -49,7 +48,7 @@ void dispMenu(void);
 
 //Variaveis auxiliares_____________________________________________________________
 bool t_butUp, t_butDown, t_butEnter, t_butBack;
-uint8_t CONTRASTE, BRILHO;
+uint8_t CONTRASTE;
 uint8_t menu = 1;
 int i;
 
@@ -75,24 +74,23 @@ void setup() {
   //Inicializamos o hardware__________________________________________
   lcd.createChar(0, grau);
   lcd.begin(16, 2);
+  inicia_Led(pinoLedDisplay);
   inicia_SensorAgua(pinoSensorUmidadeSolo);
   inicia_Buzzer(pinoBuzzer);
   inicia_Botao(pinobuttonUp);
   inicia_Botao(pinobuttonDown);
   inicia_Botao(pinobuttonEnter);
-  inicia_Led(pinoLedDisplay);
   pinMode(pinoCS, OUTPUT);//Configura saída para Chip Select
   iniciaSD();
 
   //Configuraçoes iniciais_________________________________________
   t_butUp = t_butDown = t_butEnter = t_butBack = false;
 
-  CONTRASTE = get_in_file(0);
-  BRILHO = get_in_file(1);
-
-  controleContraste(CONTRASTE);
-  controleBrilho(BRILHO);
-
+  CONTRASTE = get_in_file();
+  
+  controleContraste();
+  estado_Led(pinoLedDisplay, true);
+  
   if(!SD.exists(fileDados)){
     myFile = SD.open(fileDados, FILE_WRITE);
     //Se o arquivo foi aberto com sucesso, escreve nele

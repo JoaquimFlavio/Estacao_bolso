@@ -47,6 +47,9 @@ void dispMenu(void) {
         while(!estado_Botao(pinobuttonEnter)){
           auxGravar = true;
         }
+      }else{
+        lcd.setCursor(0,0);
+        lcd.print("Gravar dados");
       }
       if(!estado_Botao(pinobuttonEnter)){
           gravaDados();
@@ -56,8 +59,6 @@ void dispMenu(void) {
           }
         }
         
-      lcd.setCursor(0,0);
-      lcd.print("Gravar dados");
     break;
     case 5:
       static bool auxContraste = false;
@@ -74,43 +75,15 @@ void dispMenu(void) {
       lcd.print(CONTRASTE);
       
       while(auxContraste){
-        CONTRASTE = Sistema_UP_or_Down(CONTRASTE, 'C');
+        Sistema_UP_or_Down();
         lcd.setCursor(0,0);
         lcd.print("Contraste______|");
         lcd.setCursor(0,1);
         lcd.print(CONTRASTE);
         if(!estado_Botao(pinobuttonEnter)){
-          set_in_file(0, CONTRASTE);
+          set_in_file();
           while(!estado_Botao(pinobuttonEnter)){
             auxContraste = false;
-          }
-        }
-      }
-    break;
-    case 6:
-      static bool auxBrilho = false;
-
-      if(!estado_Botao(pinobuttonEnter)){
-        while(!estado_Botao(pinobuttonEnter)){
-          auxBrilho = true;
-        }
-      }
-
-      lcd.setCursor(0,0);
-      lcd.print("Brilho___________");
-      lcd.setCursor(0,1);
-      lcd.print(BRILHO);
-      
-      while(auxBrilho){
-        BRILHO = Sistema_UP_or_Down(BRILHO, 'B');
-        lcd.setCursor(0,0);
-        lcd.print("Brilho_________|");
-        lcd.setCursor(0,1);
-        lcd.print(BRILHO);
-        if(!estado_Botao(pinobuttonEnter)){
-          set_in_file(1, BRILHO);
-          while(!estado_Botao(pinobuttonEnter)){
-            auxBrilho = false;
           }
         }
       }

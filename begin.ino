@@ -7,7 +7,7 @@ void inicializacao(void){
    
   beepSimples(pinoBuzzer, temp_beep);
   
-  //while(estado_Botao(pinobuttonEnter)!=0);
+  while(estado_Botao(pinobuttonEnter)!=0);
 
   beepSimples(pinoBuzzer, temp_beep);
   

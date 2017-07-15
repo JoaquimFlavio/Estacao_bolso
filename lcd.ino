@@ -18,38 +18,32 @@ void timeDisplay(void) {
 }
 //--------------------------------------------------------------------------------------------------------------------------------
 
-int Sistema_UP_or_Down(int varContol, char control){
+int Sistema_UP_or_Down(){
   static bool t_butA = false, t_butD = false;
   
   if(!estado_Botao(pinobuttonUp))   t_butA = true;
   if(!estado_Botao(pinobuttonDown)) t_butD = true;
 
   if(estado_Botao(pinobuttonUp) && t_butA == true && t_butD == false){
-     varContol--; 
+     CONTRASTE--;
+     controleContraste();
+     t_butA = false; 
      lcd.clear();
-     control == 'C' ? controleContraste(varContol) : controleBrilho(varContol);
-     t_butA = false;
   }
   if(estado_Botao(pinobuttonDown) && t_butA == false && t_butD == true){
-     varContol++;
-     lcd.clear();
-     control == 'C' ? controleContraste(varContol) : controleBrilho(varContol);
+     CONTRASTE++;
+     controleContraste();
      t_butD = false;
+     lcd.clear();
   }
 
-  if(varContol <= 0)
-    varContol = 0;
-  else if(varContol >= 10)
-    varContol = 10;
-
-    return varContol;
+  if(CONTRASTE <= 0)
+    CONTRASTE = 0;
+  else if(CONTRASTE >= 10)
+    CONTRASTE = 10;
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------
-void controleContraste(int contraste){
-  analogWrite(pinoContrasteDisplay, map(contraste, 0, 10, 0, 255));
-}
-
-void controleBrilho(int brilho){
-  analogWrite(pinoLedDisplay, map(brilho, 0, 10, 0, 255));
+void controleContraste(){
+  analogWrite(pinoContrasteDisplay, map(CONTRASTE, 0, 10, 0, 255));
 }

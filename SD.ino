@@ -14,12 +14,12 @@ void iniciaSD(void) {
 }
 //-------------------------------------------------------------------
 
-void set_in_file(uint8_t opc, int value){
-  SD.remove(opc == 0 ? fileContraste : fileBrilho);
-  myFile = SD.open(opc == 0 ? fileContraste : fileBrilho, FILE_WRITE);
+void set_in_file(){
+  SD.remove(fileContraste);
+  myFile = SD.open(fileContraste, FILE_WRITE);
   //Se o arquivo foi aberto com sucesso, escreve nele
   if (myFile) {
-    myFile.println(value);
+    myFile.println(CONTRASTE);
     myFile.close();// Terminou de escrever, fecha-se o arquivo:
     #if Activation_serial == 1
       Serial.println("Ok!!! Contraste");
@@ -30,10 +30,10 @@ void set_in_file(uint8_t opc, int value){
   #endif
 }
 
-int get_in_file(uint8_t opc){
+int get_in_file(){
   char h[3];
   i = 0;
-  myFile = SD.open(opc == 0 ? fileContraste : fileBrilho);
+  myFile = SD.open(fileContraste);
   if (myFile) {
     // Le todo o arquivo...
     while (myFile.available()) {
