@@ -1,4 +1,4 @@
-#include <GuaraTeca_Hardware.h>
+ #include <GuaraTeca_Hardware.h>
 #include <LiquidCrystal.h>
 #include <DHT.h>
 #include <SPI.h>
@@ -28,12 +28,12 @@
 #define pinoDB4                 A5
 
 //Definicao de constantes de controle do codigo_____________________________________
-#define Quant_menus   6
+#define Quant_menus   5
 #define intervalo_lcd 15000
 #define temp_beep     150
 #define fileContraste "CTRS.txt"
 #define fileBrilho    "BRl.txt"
-#define fileDados     "DATA.txt"
+#define fileDados     "DATA.csv"
 
 //Funcoes/Rotinas do codigo________________________________________________________
 int Sistema_UP_or_Down();
